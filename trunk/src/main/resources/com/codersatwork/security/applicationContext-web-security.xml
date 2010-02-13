@@ -1,0 +1,34 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
+
+
+    <http auto-config="true" access-decision-manager-ref="accessDecisionManager" access-denied-page="/accessDenied.jsp">
+
+
+        <!--following line disables the security-->
+        <!--<intercept-url pattern="/pages/**" access="IS_AUTHENTICATED_FULLY"/>-->
+
+        <intercept-url pattern="/page/home" access="PRIVILEGE_HOME"/>
+
+
+        <!--IT WILL CREATE AuthenticationProcessingFilter />-->
+
+        <form-login login-page="/public/login" authentication-failure-url="/public/login?error=true"
+                    default-target-url="/pages/home" login-processing-url="/pages/j_spring_security_check"/>
+
+
+        <remember-me user-service-ref="userRepository"/>
+
+        <logout logout-success-url="/public/login" logout-url="/pages/j_spring_security_logout"/>
+
+        <concurrent-session-control max-sessions="1"/>
+
+
+    </http>
+
+
+</beans:beans>
+
